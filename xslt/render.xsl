@@ -9,11 +9,11 @@
 				<title><xsl:value-of select="challenge/title" /></title>
 				<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
                 <link href="https://fonts.googleapis.com/css?family=Open+Sans:400italic,400,300,600,700" rel="stylesheet" type="text/css" />
-                <link rel="stylesheet" href="render.css" />
+                <link rel="stylesheet" href="https://raw.githubusercontent.com/IIK-S2G/ctf-challenges/main/xslt/render.css" />
 			</head>
             <body>
                 <div class="content">
-                    <img class="header-logo" src="./ntnu.svg" />
+                    <img class="header-logo" src="https://raw.githubusercontent.com/IIK-S2G/ctf-challenges/main/xslt/ntnu.svg" />
                     <h1><xsl:value-of select="challenge/title" /></h1>
                     <hr />
                     <xsl:if test="challenge/history/event/@type='used'">
