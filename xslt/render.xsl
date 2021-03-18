@@ -100,7 +100,7 @@ code {
                         <hr />
                     </xsl:if>
                     <h2>Description</h2>
-                    <p class="desc"><xsl:value-of select="challenge/description" /></p>
+                    <xsl:copy-of select="challenge/description" />
                     <h2>Authors</h2>
                     <ul>
                         <xsl:for-each select="challenge/authors/author">
@@ -112,17 +112,44 @@ code {
                             </li>
                         </xsl:for-each>
                     </ul>
+                    <xsl:if test="challenge/notes">
+                        <h2>Notes</h2>
+                        <xsl:copy-of select="challenge/notes" />
+                    </xsl:if>
                     <h2>Hints</h2>
-                    <ul>
-                        <xsl:for-each select="challenge/hints/hint">
-                            <li><xsl:value-of select="." /></li>
-                        </xsl:for-each>
-                    </ul>
+                    <xsl:choose>
+                        <xsl:when test="challenge/hints/*">
+                            <ul>
+                                <xsl:for-each select="challenge/hints/hint">
+                                    <li><xsl:value-of select="." /></li>
+                                </xsl:for-each>
+                            </ul>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <p class="no-hints">No hints are available for this challenge!</p>
+                        </xsl:otherwise>
+                    </xsl:choose>
                     <h2>Flag</h2>
                     <ul>
                         <li>Format: <code><xsl:value-of select="challenge/flag/format" /></code></li>
                         <li>Solution: <code><xsl:value-of select="challenge/flag/solution" /></code></li>
                     </ul>
+                    <h2>Writeups</h2>
+                    <xsl:choose>
+                        <xsl:when test="challenge/writeups/*">
+                            <ul class="attachments">
+                                <xsl:for-each select="challenge/writeups/file">
+                                    <li>
+                                        <a href="{@path}"><xsl:value-of select="@name" /></a>
+                                        <br /><span class="filetype"><xsl:value-of select="@type" /></span>
+                                    </li>
+                                </xsl:for-each>
+                            </ul>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <p class="no-hints">No writeups are available for this challenge!</p>
+                        </xsl:otherwise>
+                    </xsl:choose>
                     <xsl:if test="challenge/attachments/*">
                         <h2>Attachments</h2>
                         <p>The following files are attached to this challenge and must be distributed to participants:</p>
@@ -143,6 +170,7 @@ code {
                                 <li>
                                     <strong>
                                         <xsl:choose>
+                                            <xsl:when test="@type='compose'">Docker-compose stack</xsl:when>
                                             <xsl:when test="@type='docker'">Docker container</xsl:when>
                                             <xsl:when test="@type='vm'">Virtual machine</xsl:when>
                                             <xsl:otherwise>Other service type</xsl:otherwise>
