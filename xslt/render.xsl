@@ -140,7 +140,7 @@ code {
                             <ul class="attachments">
                                 <xsl:for-each select="challenge/writeups/file">
                                     <li>
-                                        <a href="{@path}"><xsl:value-of select="@name" /></a>
+                                        <a href="{@href}"><xsl:value-of select="@title" /></a>
                                         <br /><span class="filetype"><xsl:value-of select="@type" /></span>
                                     </li>
                                 </xsl:for-each>
@@ -156,7 +156,7 @@ code {
                         <ul class="attachments">
                             <xsl:for-each select="challenge/attachments/file">
                                 <li>
-                                    <a href="{@path}"><xsl:value-of select="@name" /></a>
+                                    <a href="{@href}"><xsl:value-of select="@href" /></a>
                                     <br /><span class="filetype"><xsl:value-of select="@type" /></span>
                                 </li>
                             </xsl:for-each>
