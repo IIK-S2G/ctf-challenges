@@ -3,6 +3,13 @@
                 xmlns:html="http://www.w3.org/TR/REC-html40"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 	<xsl:output method="html" version="1.0" encoding="UTF-8" indent="yes"/>
+    <xsl:template match="description/*">
+        <xsl:copy>
+            <xsl:apply-templates select="node()|@*" />
+        </xsl:copy>
+    </xsl:template>
+    <xsl:template match="ip"><code class="replacement"><xsl:value-of select="@for" /></code></xsl:template>
+    <xsl:template match="port"><code class="replacement"><xsl:value-of select="@port" /></code></xsl:template>
 	<xsl:template match="/">
 		<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
 			<head>
@@ -50,6 +57,13 @@ a:link, a:visited {
 code {
     font-weight: bold;
     color: #00509e;
+}
+code.replacement {
+    color: white;
+    background: #6096d0;
+    padding: 2px 5px;
+    border-radius: 6px;
+    margin: 2px;
 }
 
                 </style>
@@ -100,7 +114,7 @@ code {
                         <hr />
                     </xsl:if>
                     <h2>Description</h2>
-                    <xsl:copy-of select="challenge/description" />
+                    <xsl:apply-templates select="challenge/description" />
                     <h2>Authors</h2>
                     <ul>
                         <xsl:for-each select="challenge/authors/author">
@@ -175,6 +189,7 @@ code {
                                             <xsl:when test="@type='vm'">Virtual machine</xsl:when>
                                             <xsl:otherwise>Other service type</xsl:otherwise>
                                         </xsl:choose>
+                                        [<code><xsl:value-of select="@id" /></code>]
                                     </strong>
                                     <br /><span class="service-attr">File: <xsl:value-of select="@file" /></span>
                                     <br /><span class="service-attr">Ports: <xsl:for-each select="port">
